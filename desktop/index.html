@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; style-src 'self'; script-src 'self';"
+  >
+  <title>RBrowser</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="toolbar">
+    <div class="brand"><span class="ruby">◆</span> RBrowser</div>
+
+    <div class="controls">
+      <button id="back" title="Back" disabled>←</button>
+      <button id="forward" title="Forward" disabled>→</button>
+      <button id="reload" title="Reload">↻</button>
+      <button id="home" title="Home">⌂</button>
+
+      <form id="address-form">
+        <span class="secure-icon">◈</span>
+        <input
+          id="address"
+          type="text"
+          placeholder="Search or enter a website"
+          aria-label="Search or enter a website"
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <button type="submit" class="go">Go</button>
+      </form>
+    </div>
+  </header>
+  <script src="renderer.js"></script>
+</body>
+</html>

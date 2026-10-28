@@ -1,0 +1,29 @@
+
+services:
+  redis:
+    image: redis:alpine
+    container_name: searchx-redis
+    restart: unless-stopped
+    command: redis-server --save "" --appendonly no
+    networks:
+      - searchx
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searchx-engine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=http://localhost:8080/
+      - SEARXNG_REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - redis
+    networks:
+      - searchx
+
+networks:
+  searchx:
+    driver: bridge

@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html class="no-js theme-{{ preferences.get_value('simple_style') or 'auto' }} center-alignment-{{ preferences.get_value('center_alignment') and 'yes' or 'no' }}" lang="{{ locale_rfc5646 }}" {% if rtl %} dir="rtl"{% endif %}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="endpoint" content="{{ endpoint }}">
+  <meta name="description" content="RBrowser — Search freely. Browse privately.">
+  <meta name="keywords" content="RBrowser, private search, web search">
+  <meta name="generator" content="RBrowser">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}{% endblock %}{{ instance_name }}</title>
+
+  <script type="module" src="{{ url_for('static', filename='sxng-core.min.js') }}" client_settings="{{ client_settings }}"></script>
+  {% block meta %}{% endblock %}
+
+  {% if rtl %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='sxng-rtl.min.css') }}" type="text/css" media="screen">
+  {% else %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='sxng-ltr.min.css') }}" type="text/css" media="screen">
+  {% endif %}
+
+  <noscript>
+    <link rel="stylesheet" href="{{ url_for('static', filename='sxng-noscript.min.css') }}" type="text/css">
+  </noscript>
+
+  {% if get_setting('server.limiter') or get_setting('server.public_instance') %}
+  <link rel="stylesheet" href="{{ url_for('client_token', token=link_token) }}" type="text/css">
+  {% endif %}
+
+  <style>
+    /* RBrowser homepage branding */
+    .index .title {
+      background: none !important;
+      background-image: none !important;
+      min-height: 0 !important;
+      height: auto !important;
+      margin: 4rem auto 2rem !important;
+    }
+
+    .index .title h1.rbrowser-logo {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      background: none !important;
+      color: #4285f4 !important;
+      font-size: 4rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.04em !important;
+      line-height: 1.2 !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 0 12px !important;
+      padding: 0 !important;
+      text-indent: 0 !important;
+      overflow: visible !important;
+    }
+
+    .rbrowser-tagline {
+      color: #a0a0aa;
+      font-size: 1rem;
+      margin-top: 0;
+    }
+
+    /* RBrowser wordmark on search-results pages */
+    #search_logo {
+      text-decoration: none !important;
+      background: none !important;
+      text-indent: 0 !important;
+      overflow: visible !important;
+    }
+
+    .rbrowser-wordmark {
+      display: inline-block !important;
+      color: #4285f4 !important;
+      font-size: 1.6rem !important;
+      font-weight: 800 !important;
+      letter-spacing: -0.04em !important;
+      line-height: 1.2 !important;
+      white-space: nowrap !important;
+    }
+
+    /* Keep the original results header layout, with a visible wordmark */
+    
+
+
+    body.search_endpoint #search_logo {
+      position: static !important;
+      float: none !important;
+      transform: none !important;
+      margin-left: 12px !important;
+      margin-right: 16px !important;
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: 100%;
+    }
+
+    body.search_endpoint #search_view {
+      min-width: 0;
+    }
+
+    /* Footer branding */
+    footer a {
+      text-decoration: none;
+    }
+    
+/* Simplify the search-results page */
+body.search_endpoint .search_filters {
+  display: none !important;
+}
+
+body.search_endpoint details:has(> summary) {
+  /* Leave other expandable sections unchanged */
+}
+
+body.search_endpoint .result_stats,
+body.search_endpoint #result_stats,
+body.search_endpoint .engine-stats {
+  display: none !important;
+}
+
+/* RBrowser results header alignment */
+
+
+body.search_endpoint #search_logo {
+  display: block !important;
+  width: 150px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  text-indent: 0 !important;
+  position: static !important;
+}
+
+body.search_endpoint .rbrowser-wordmark {
+  font-size: 1.5rem !important;
+  white-space: nowrap !important;
+  color: #4285f4 !important;
+  letter-spacing: -0.04em !important;
+}
+
+body.search_endpoint .search_filters {
+  display: none !important;
+}
+
+/* Hide response-time information */
+body.search_endpoint details:has(summary) {
+  /* Keep other details unchanged */
+}
+
+body.search_endpoint .result_stats,
+body.search_endpoint #result_stats,
+body.search_endpoint .engine-stats {
+  display: none !important;
+}
+
+/* RBrowser search-results header: clean layout */
+body.search_endpoint #search_header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+  padding: 20px 24px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+}
+
+body.search_endpoint #search_logo {
+  display: block !important;
+  flex: 0 0 140px !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: static !important;
+  transform: none !important;
+  overflow: visible !important;
+  text-indent: 0 !important;
+  background: none !important;
+}
+
+body.search_endpoint .rbrowser-wordmark {
+  display: block !important;
+  color: #4285f4 !important;
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.04em !important;
+  white-space: nowrap !important;
+}
+
+body.search_endpoint #search_view {
+  flex: 1 1 680px !important;
+  min-width: 0 !important;
+  width: auto !important;
+  margin: 0 !important;
+}
+
+body.search_endpoint .search_filters {
+  display: none !important;
+}
+
+  </style>
+
+  {% block head %}
+  <link title="{{ instance_name }}" type="application/opensearchdescription+xml" rel="search" href="{{ opensearch_url }}">
+  {% endblock %}
+
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.png') }}" sizes="any">
+  <link rel="icon" href="{{ url_for('static', filename='img/favicon.svg') }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/favicon.png') }}">
+  <link rel="manifest" href="{{ url_for('manifest') }}">
+</head>
+
+<body class="{{ endpoint }}_endpoint">
+  <main id="main_{{ self._TemplateReference__context.name|replace('simple/', '')|replace('.html', '') }}" class="{{ body_class }}">
+    {% if errors %}
+    <div class="dialog-error" role="alert">
+      <a href="#" class="close" aria-label="close" title="close">×</a>
+      <ul>
+        {% for message in errors %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <nav id="links_on_top">
+      {%- from 'simple/icons.html' import icon_big -%}
+
+      {%- block linkto_about -%}
+      <a href="{{ url_for('info', pagename='about') }}" class="link_on_top_about">
+        {{ icon_big('information-circle') }}<span>{{ _('About') }}</span>
+      </a>
+      {%- endblock -%}
+
+      {%- block linkto_donate -%}
+      {%- if donation_url -%}
+      <a href="{{ donation_url }}" class="link_on_top_donate">
+        {{ icon_big('heart') }}<span>{{ _('Donate') }}</span>
+      </a>
+      {%- endif -%}
+      {%- endblock -%}
+
+      {%- block linkto_preferences -%}
+      {%- if request.args.get('preferences') -%}
+      <a href="{{ url_for('preferences') }}?preferences={{ request.args.get('preferences') }}&preferences_preview_only=true" class="link_on_top_preferences">
+        {{ icon_big('settings') }}<span>{{ _('Preferences') }}</span>
+      </a>
+      {%- else -%}
+      <a href="{{ url_for('preferences') }}" class="link_on_top_preferences">
+        {{ icon_big('settings') }}<span>{{ _('Preferences') }}</span>
+      </a>
+      {%- endif -%}
+      {%- endblock -%}
+    </nav>
+
+    {% block header %}{% endblock %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>
+      <strong>RBrowser</strong> — Search freely. Browse privately.<br>
+      <a href="{{ searxng_git_url }}">{{ _('Source code') }}</a>
+      | <a href="{{ get_setting('brand.issue_url') }}">{{ _('Issue tracker') }}</a>
+      {% if enable_metrics %}| <a href="{{ url_for('stats') }}">{{ _('Engine stats') }}</a>{% endif %}
+      {% if get_setting('brand.public_instances') %}
+      | <a href="{{ get_setting('brand.public_instances') }}">{{ _('Public instances') }}</a>
+      {% endif %}
+      {% if get_setting('general.privacypolicy_url') %}
+      | <a href="{{ get_setting('general.privacypolicy_url') }}">{{ _('Privacy policy') }}</a>
+      {% endif %}
+      {% if get_setting('general.contact_url') %}
+      | <a href="{{ get_setting('general.contact_url') }}">{{ _('Contact instance maintainer') }}</a>
+      {% endif %}
+      {% for title, link in get_setting('brand.custom.links').items() %}
+      | <a href="{{ link }}">{{ _(title) }}</a>
+      {% endfor %}
+    </p>
+  </footer>
+</body>
+</html>

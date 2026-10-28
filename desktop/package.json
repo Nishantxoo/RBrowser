@@ -1,0 +1,13 @@
+
+{
+  "name": "rbrowser",
+  "version": "1.0.0",
+  "description": "RBrowser - a personal desktop browser powered by private metasearch",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^45.1.0"
+  }
+}
